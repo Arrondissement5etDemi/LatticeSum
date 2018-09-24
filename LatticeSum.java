@@ -5,7 +5,7 @@ public class LatticeSum{
 	private static double threshold = 0.000001;  //the threshold for convergence criterion.
 
 	public static void main(String[] args) {
-		String fileName = "task2_5.txt";
+		String fileName = "plot.csv";
 		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(fileName);
@@ -14,9 +14,14 @@ public class LatticeSum{
 			System.out.println("PrintWriter error opening the file " + fileName);
 			System.out.println(e.getMessage());
 		}
-		for (double x = -Math.PI; x <= Math.PI; x = x + 0.001) {
-			Complex z = new Complex(x,0.05);
-			writer.println(x+"	"+squareLatticeSum(z));
+
+		//writer.println("Re(z) Im(z) Re(theta(z)) Im(theta(z))");
+		for (double x = -3.0; x <= 3.0; x += 0.01) {
+			for (double y = 0.05; y <= 1.0; y += 0.01) {
+				Complex z = new Complex(x, y);
+				Complex thetaZ = squareLatticeSum(z);
+				writer.println(x + "," + y + "," + thetaZ.getRe() + "," + thetaZ.getIm());
+			}
 		}
 		writer.close();
 	}
